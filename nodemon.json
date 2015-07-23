@@ -1,0 +1,8 @@
+{
+  "execMap": {
+    "js": "node --harmony"
+  },
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
