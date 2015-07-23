@@ -94,6 +94,9 @@ gulp.task('dev.browser-sync', function() {
 });
 
 gulp.task('dev.watch.js', function() {
+  if (isProduction) {
+    return;
+  }
   var watcher = watchify(bundler);
 
   var taskName = this.seq[0];
@@ -111,18 +114,19 @@ gulp.task('dev.watch.js', function() {
 });
 
 gulp.task('dev.watch.html', function() {
+  if (isProduction) {
+    return;
+  }
   gulp.watch(path.html, ['copy']);
 });
 
 gulp.task('dev.watch', ['dev.watch.js', 'dev.watch.html']);
 
 gulp.task('build', function(callback) {
-  var build = isProduction ? [] : ['dev.watch'];
-
   return runSequence(
     'build.clean',
     'copy',
-    build,
+    'dev.watch',
     'dev.browser-sync',
     callback
   );
