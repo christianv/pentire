@@ -1,14 +1,35 @@
 var React = require('react');
-var Child = require('./child.jsx');
+var Picture = require('./picture.jsx');
+var $ = require('jquery');
 
 var Parent = React.createClass({
-  render: function(){
+  getInitialState() {
+    return {
+      pictures: []
+    };
+  },
+  componentDidMount() {
+    let url = 'https://sisteam.herokuapp.com/api/pictures';
+    $.get(url, function(result) {
+      console.log(result.pictures);
+      if (this.isMounted()) {
+        this.setState({
+          pictures: result.pictures
+        });
+      }
+    }.bind(this));
+  },
+  render() {
     return (
       <div>
-        <div>This is the parent.</div>
-        <Child name="child"/>
+        <h1>SIS Team Members</h1>
+        <ul className="pictures-container">
+          {this.state.pictures.map(function(picture) {
+            return <Picture key={picture.image} data={picture}/>;
+          })}
+        </ul>
       </div>
-    )
+    );
   }
 });
 module.exports = Parent;
