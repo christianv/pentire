@@ -11,7 +11,6 @@ var Parent = React.createClass({
   componentDidMount() {
     let url = 'https://sisteam.herokuapp.com/api/pictures';
     $.get(url, function(result) {
-      console.log(result.pictures);
       if (this.isMounted()) {
         this.setState({
           pictures: result.pictures
