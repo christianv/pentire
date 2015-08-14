@@ -112,7 +112,7 @@ gulp.task('css', function() {
 var bundler = browserify({
   'entries': [path.jsEntrypoint],
   'transform': [babelify],
-  'debug': true,
+  'debug': !isProduction,
   'cache': {},
   'packageCache': {},
   'fullPaths': true
