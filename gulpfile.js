@@ -119,8 +119,11 @@ var bundler = browserify({
 });
 
 var bundleIt = function(bundle) {
+  var streamify = require('gulp-streamify');
+  var uglify = require('gulp-uglify');
   return bundle.bundle()
     .pipe(source(path.out))
+    .pipe(streamify(gulpif(isProduction, uglify())))
     .pipe(gulp.dest(path.destJs))
     .on('end', function() {
     if (useBrowserSync) {
