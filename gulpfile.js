@@ -139,18 +139,38 @@ gulp.task('prod.js', function() {
   return bundleIt(bundler);
 });
 
-/**
- *  Initialized BrowserSync
- */
-gulp.task('dev.browser-sync', function() {
+gulp.task('nodemon', function (cb) {
   if (!useBrowserSync) {
     return;
   }
 
-  return browserSync.init({
-    server: {
-      baseDir: './dist'
+  var nodemon = require('gulp-nodemon');
+  var started = false;
+
+  return nodemon({
+    script: 'server.js'
+  }).on('start', function () {
+    // to avoid nodemon being started multiple times
+    // thanks @matthisk
+    if (!started) {
+      cb();
+      started = true;
     }
+  });
+});
+
+/**
+ *  Initialized BrowserSync
+ */
+gulp.task('dev.browser-sync', ['nodemon'], function() {
+  if (!useBrowserSync) {
+    return;
+  }
+
+  return browserSync.init(null, {
+    proxy: 'http://localhost:5000',
+    files: ['dist/**/*.*'],
+    port: 5001,
   });
 });
 

@@ -29,13 +29,13 @@ h1 {
 .picture-image {
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(0, 0, 0, .15);
-  /* We need to add this since otherwise it'll snap back instead of easing back after the hover */
-  /* stackoverflow.com/questions/24895483 */
+  // We need to add this since otherwise it'll snap back instead of easing back after the hover
+  // stackoverflow.com/questions/24895483
   display: inline-block;
   opacity: 1;
   padding: 2px;
-  /* TranslateZ is necessary since otherwise we get into 3D mode */
-  /* This will cause other images to move 1px in a random direction */
+  // TranslateZ is necessary since otherwise we get into 3D mode
+  // This will cause other images to move 1px in a random direction
   transform: translateZ(0) scale(.9);
   transition: opacity .3s ease, transform .3s ease;
   width: 150px;
