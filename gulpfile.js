@@ -111,8 +111,11 @@ gulp.task('css', function() {
 /* JavaScript */
 var bundler = browserify({
   'entries': [path.jsEntrypoint],
-  'transform': [babelify],
-  'debug': !isProduction,
+  'transform': [babelify.configure({
+    optional: ['es7.objectRestSpread']
+  })],
+  // 'debug': !isProduction,
+  'debug': true,
   'cache': {},
   'packageCache': {},
   'fullPaths': true
@@ -121,7 +124,11 @@ var bundler = browserify({
 var bundleIt = function(bundle) {
   var streamify = require('gulp-streamify');
   var uglify = require('gulp-uglify');
-  return bundle.bundle()
+  return bundle
+    .bundle()
+    .on('error', function (err) {
+      console.log('Error : ' + err.message);
+    })
     .pipe(source(path.out))
     .pipe(streamify(gulpif(isProduction, uglify())))
     .pipe(gulp.dest(path.destJs))
@@ -148,7 +155,8 @@ gulp.task('nodemon', function (cb) {
   var started = false;
 
   return nodemon({
-    script: 'server.js'
+    script: 'server.js',
+    watch: 'server.js'
   }).on('start', function () {
     // to avoid nodemon being started multiple times
     // thanks @matthisk

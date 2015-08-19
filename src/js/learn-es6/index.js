@@ -1,1 +1,0 @@
-require('./learn-es6')

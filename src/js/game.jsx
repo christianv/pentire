@@ -2,7 +2,7 @@ var React = require('react');
 var Picture = require('./picture.jsx');
 var $ = require('jquery');
 
-var Parent = React.createClass({
+var Game = React.createClass({
   getInitialState() {
     return {
       pictures: []
@@ -20,15 +20,8 @@ var Parent = React.createClass({
   },
   render() {
     return (
-      <div>
-        <h1>SIS Team Members</h1>
-        <ul className="pictures-container">
-          {this.state.pictures.map(function(picture) {
-            return <Picture key={picture.image} data={picture}/>;
-          })}
-        </ul>
-      </div>
+      <div>Hey</div>
     );
   }
 });
-module.exports = Parent;
+module.exports = Game;
