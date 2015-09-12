@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 
 var Name = require('./name.jsx');
 var Picture = require('./picture.jsx');
@@ -38,8 +38,9 @@ let Game = React.createClass({
       };
     });
   },
-  selectPerson(a, b) {
-    if (this.state.currentPicture.name === a) {
+  selectPerson(personName) {
+    let isCorrect = (this.state.currentPicture.name === personName);
+    if (isCorrect) {
       this.setState(function(previousState) {
         return {
           score: {
@@ -48,10 +49,8 @@ let Game = React.createClass({
           }
         };
       });
-      console.log('correct!');
     } else {
       this.setState(function(previousState) {
-        console.log(previousState.score.incorrect);
         return {
           score: {
             correct: previousState.score.correct,
@@ -59,9 +58,18 @@ let Game = React.createClass({
           }
         };
       });
-      console.log('incorrect');
     }
-    this.selectNextPerson();
+
+    let pictureImage =  document.querySelector('.p-picture-container .p-picture-image', React.findDOMNode(this));
+    let addClassname = isCorrect ? 'p-animate-correct' : 'p-animate-incorrect'
+    pictureImage.className = pictureImage.className + ' ' + addClassname;
+
+    let onAnimationFinished = () => {
+      pictureImage.removeEventListener('animationend', onAnimationFinished);
+      this.selectNextPerson();
+    };
+
+    pictureImage.addEventListener('animationend', onAnimationFinished);
   },
   componentDidMount() {
     let url = 'https://sisteam.herokuapp.com/api/pictures';
@@ -83,7 +91,7 @@ let Game = React.createClass({
         <div className="p-game-container">
           <Score data={this.state.score} />
           <Picture data={this.state.currentPicture} hideName={true} />
-          <Name names={this.state.allNames} currentPicture={this.state.currentPicture} selectPerson={this.selectPerson} />
+          <Name names={this.state.allNames} selectPerson={this.selectPerson} />
         </div>
       </div>
     );

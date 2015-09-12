@@ -10,17 +10,6 @@ let Name = React.createClass({
       value: ''
     });
   },
-  getInitialState() {
-    return {userInput: ''};
-  },
-  emptyInput() {
-    console.log('hey3');
-    this.setState({
-      userInput: 'ds'
-    });
-    return true;
-    // this.forceUpdate();
-  },
   render: function(){
 
     let matchName = (name, value) => {
@@ -29,8 +18,6 @@ let Name = React.createClass({
 
     return (
       <div className="p-name-container">
-        {this.props.currentPicture.name}<br />
-
         <div className="p-name-autocomplete">
           <Autocomplete
             initialValue=""

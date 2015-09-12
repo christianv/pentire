@@ -90,51 +90,70 @@ body {
 .p-picture-image {
   animation-duration: 1s;
   animation-fill-mode: both;
+  border: 0;
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(0, 0, 0, .15);
   // We need to add this since otherwise it'll snap back instead of easing back after the hover
   // stackoverflow.com/questions/24895483
   display: inline-block;
   height: 150px;
-  opacity: 1;
+  opacity: 0;
   padding: 2px;
   // TranslateZ is necessary since otherwise we get into 3D mode
   // This will cause other images to move 1px in a random direction
   // transform: translateZ(0) scale(.9);
   // transition: opacity .3s ease, transform .3s ease;
   width: 150px;
+}
 
-  &:hover {
-    animation-name: bombRightOut;
-    // opacity: .9;
-    // transform: rotate(-20deg);
-    // transition: opacity .3s ease, transform .3s ease;
+.p-animate-correct {
+  animation-name: bombRightOutGreen;
+}
+.p-animate-incorrect {
+  animation-name: bombLeftOutRed;
+}
+.p-loaded {
+  opacity: 1;
+}
+
+@keyframes load2 {
+  0% {
+    transform: rotate(0deg);
   }
-
-  &::after {
-    background-image: repeating-radial-gradient(center center, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2) 1px, transparent 1px, transparent 100%);
-    background-size: 3px 3px;
-    content: ' ddddd';
-    z-index: 10;
+  100% {
+    transform: rotate(360deg);
   }
 }
 
-@keyframes bombRightOut {
+@keyframes bombRightOutGreen {
   0% {
+    box-shadow: 0 0 15px rgba(0, 0, 0, .15);
+  }
+  30% {
+    box-shadow: 0 0 20px rgba(135, 224, 133, 1);
     opacity: 1;
     transform: rotate(0deg);
     transform-origin: 50% 50%;
   }
-
-  // 70% {
-  //   opacity: .5;
-  //   transform-origin: 200% 50%;
-  //   transform: rotate(160deg) scale(.5);
-  // }
-
   100% {
     opacity: 0;
     transform: rotate(160deg) scale(.1);
-    transform-origin: 250% 10%;
+    transform-origin: 200% 10%;
+  }
+}
+@keyframes bombLeftOutRed {
+  0% {
+    box-shadow: 0 0 15px rgba(0, 0, 0, .15);
+  }
+  30% {
+    box-shadow: 0 0 20px rgba(224, 80, 75, 1);
+    opacity: 1;
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(-160deg) scale(.1);
+    transform-origin: -100% 10%;
   }
 }
