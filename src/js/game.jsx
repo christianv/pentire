@@ -8,7 +8,7 @@ var Score = require('./score.jsx');
 var $ = require('jquery');
 var _ = require('lodash');
 
-const GAME_PEOPLE_AMOUNT = 3;
+const GAME_PEOPLE_AMOUNT = 20;
 
 let Game = React.createClass({
   getInitialState() {
