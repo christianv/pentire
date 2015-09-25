@@ -7,7 +7,6 @@ var Picture = React.createClass({
     pictureElement.className = pictureElement.className.replace(' p-loaded', '');
 
     let loaded = () => {
-      console.log('loaded');
       pictureElement.removeEventListener('load', loaded);
       pictureElement.className = pictureElement.className.replace(' p-animate-correct', '').replace(' p-animate-incorrect', '');
       pictureElement.className = pictureElement.className + ' p-loaded';
@@ -21,7 +20,7 @@ var Picture = React.createClass({
   render: function(){
     return (
       <div className="p-picture-container">
-        <img className="p-picture-image" src={this.props.data.image} />
+        <img className={this.props.hideByDefault ? 'p-picture-image p-picture-image-hide' : 'p-picture-image'} src={this.props.data.image} />
         <div className={this.props.hideName ? 'p-hidden' : ''}>{this.props.data.name}</div>
       </div>
     );

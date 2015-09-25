@@ -21,7 +21,7 @@ let Name = React.createClass({
         <div className="p-name-autocomplete">
           <Autocomplete
             initialValue=""
-            items={this.props.names}
+            items={this.props.names.sort()}
             getItemValue={(item) => item}
             shouldItemRender={matchName}
             ref="nameContainer"

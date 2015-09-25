@@ -1,5 +1,6 @@
 var React = require('react/addons');
 
+var Finished = require('./finished.jsx');
 var Name = require('./name.jsx');
 var Picture = require('./picture.jsx');
 var Score = require('./score.jsx');
@@ -7,7 +8,7 @@ var Score = require('./score.jsx');
 var $ = require('jquery');
 var _ = require('lodash');
 
-const GAME_PEOPLE_AMOUNT = 20;
+const GAME_PEOPLE_AMOUNT = 3;
 
 let Game = React.createClass({
   getInitialState() {
@@ -16,6 +17,8 @@ let Game = React.createClass({
       pictures: [],
       currentPicture: {},
       currentIndex: 0,
+      finished: false,
+      incorrectPeople: [],
       score: {
         correct: 0,
         incorrect: 0
@@ -29,13 +32,21 @@ let Game = React.createClass({
     // Lodash's sample method allows us to get random items in an array
     return _.sample(pictures, GAME_PEOPLE_AMOUNT);
   },
-  selectNextPerson() {
+  nextStep() {
+
     this.setState(function(previousState) {
-      var newIndex = previousState.currentIndex + 1;
-      return {
-        currentIndex: newIndex,
-        currentPicture: this.state.pictures[newIndex]
-      };
+      if (previousState.currentIndex === GAME_PEOPLE_AMOUNT - 1) {
+        return {
+          finished: true
+        }
+      }
+      else {
+        var newIndex = previousState.currentIndex + 1;
+        return {
+          currentIndex: newIndex,
+          currentPicture: this.state.pictures[newIndex]
+        };
+      }
     });
   },
   selectPerson(personName) {
@@ -52,6 +63,7 @@ let Game = React.createClass({
     } else {
       this.setState(function(previousState) {
         return {
+          incorrectPeople: this.state.incorrectPeople.concat([this.state.currentPicture]),
           score: {
             correct: previousState.score.correct,
             incorrect: previousState.score.incorrect + 1
@@ -66,10 +78,14 @@ let Game = React.createClass({
 
     let onAnimationFinished = () => {
       pictureImage.removeEventListener('animationend', onAnimationFinished);
-      this.selectNextPerson();
+      this.nextStep();
     };
 
     pictureImage.addEventListener('animationend', onAnimationFinished);
+  },
+  reset() {
+    this.replaceState(this.getInitialState());
+    this.componentDidMount();
   },
   componentDidMount() {
     let url = 'https://sisteam.herokuapp.com/api/pictures';
@@ -86,12 +102,26 @@ let Game = React.createClass({
     }.bind(this));
   },
   render() {
+    var playing;
+    if (this.state.finished) {
+      playing = (
+        <div>
+          <Finished incorrectPeople={this.state.incorrectPeople} reset={this.reset} />
+        </div>
+      )
+    } else {
+      playing = (
+        <div>
+          <Picture data={this.state.currentPicture} hideName={true} hideByDefault={true} />
+          <Name names={this.state.allNames} selectPerson={this.selectPerson} />
+        </div>
+      )
+    }
     return (
       <div>
         <div className="p-game-container">
           <Score data={this.state.score} />
-          <Picture data={this.state.currentPicture} hideName={true} />
-          <Name names={this.state.allNames} selectPerson={this.selectPerson} />
+          {playing}
         </div>
       </div>
     );

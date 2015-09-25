@@ -1,5 +1,5 @@
+var Pictures = require('./pictures.jsx');
 var React = require('react');
-var Picture = require('./picture.jsx');
 var $ = require('jquery');
 
 var Overview = React.createClass({
@@ -20,11 +20,7 @@ var Overview = React.createClass({
   },
   render() {
     return (
-      <ul className="p-pictures-container">
-        {this.state.pictures.map(function(picture) {
-          return <Picture key={picture.image} data={picture}/>;
-        })}
-      </ul>
+      <Pictures pictures={this.state.pictures}></Pictures>
     );
   }
 });
