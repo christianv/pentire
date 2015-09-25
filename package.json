@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node --harmony server.js",
-    "postinstall": "gulp build",
+    "postinstall": "gulp build-prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

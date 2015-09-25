@@ -231,5 +231,15 @@ gulp.task('build', function(callback) {
   );
 });
 
+gulp.task('build-prod', function(callback) {
+  return runSequence(
+    'build.clean',
+    'copy',
+    'prod.js',
+    'css',
+    callback
+  );
+});
+
 gulp.task('default', ['build']);
 })();
