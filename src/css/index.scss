@@ -84,9 +84,22 @@ body {
 }
 
 .p-picture-container {
+  margin-top: 50px !important;
   padding: 10px;
+  position: relative;
   text-align: center;
   width: 200px;
+  &::before {
+    background: url('https://christianvuerings.github.io/pentire/src/img/xmas.gif');
+    background-size: contain;
+    content: '';
+    height: 190px;
+    left: -20px;
+    position: absolute;
+    top: -63px;
+    width: 190px;
+    z-index: 2;
+  }
 }
 
 .p-picture-image {
@@ -100,6 +113,7 @@ body {
   display: inline-block;
   height: 150px;
   padding: 2px;
+  position: relative;
   // TranslateZ is necessary since otherwise we get into 3D mode
   // This will cause other images to move 1px in a random direction
   // transform: translateZ(0) scale(.9);
