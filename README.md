@@ -1,6 +1,6 @@
 # Pentire
 
-https://pentire.herokuapp.com/
+https://pentire-berkeley.herokuapp.com/
 
 ## Install & run
 
