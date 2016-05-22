@@ -84,22 +84,9 @@ body {
 }
 
 .p-picture-container {
-  margin-top: 50px !important;
   padding: 10px;
-  position: relative;
   text-align: center;
   width: 200px;
-  &::before {
-    background: url('https://christianvuerings.github.io/pentire/src/img/xmas.gif');
-    background-size: contain;
-    content: '';
-    height: 190px;
-    left: -20px;
-    position: absolute;
-    top: -63px;
-    width: 190px;
-    z-index: 2;
-  }
 }
 
 .p-picture-image {
